@@ -19,9 +19,9 @@ conn.connect(function (err) {
              console.log("TABLO OLUSTURULDU...");
          }); */
 
-    var sorgula = "CREATE TABLE IF NOT EXISTS ogrenciler (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(30), adres VARCHAR(75))";
+    var sorgula = "CREATE TABLE IF NOT EXISTS students (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(30), adres VARCHAR(75))";
 
-    var sorgu = "INSERT INTO ogrenciler (name , adres) value ?";
+    var sorgu = "INSERT INTO students (name , adres) value ?";
 
 
     var values = [
@@ -39,19 +39,19 @@ conn.connect(function (err) {
     conn.query(sorgu, [values], function (err) {
         if (err) throw err;
 
-        console.log("ogrenciler tablosu olusturuldu...");
+        console.log("students table is created...");
         console.log("veriler girildi");
     });
 
-    conn.query("SELECT * FROM ogrenciler", function (err, sonuc) {
-        console.log("Tum ogrenciler tablosu cekildi ... ");
+    conn.query("SELECT * FROM students", function (err, sonuc) {
+        console.log("Tum students tablosu cekildi ... ");
         console.log("==========================================");
 
         console.log(sonuc);
         console.log("sonuc2 adresi : " + sonuc[2].adres);
     });
 
-    conn.query("SELECT * FROM ogrenciler WHERE id>3  OR name LIKE '%fa' ", function (err, result) { //name LIKE '%ho'
+    conn.query("SELECT * FROM students WHERE id>3  OR name LIKE '%fa' ", function (err, result) { //name LIKE '%ho'
         if (err) console.log(err);
 
         console.log(result);
@@ -59,7 +59,7 @@ conn.connect(function (err) {
 
     var ad = "okuzhan";
     var yer = "Bursa";
-    var sorgu2 = "SELECT * FROM ogrenciler WHERE name=? and adres=?";
+    var sorgu2 = "SELECT * FROM students WHERE name=? and adres=?";
     conn.query(sorgu2, [ad, yer], function (err, res) {
         if (err) throw err;
 
@@ -67,7 +67,7 @@ conn.connect(function (err) {
     });
 
 
-    var sorgu3 = "DELETE FROM ogrenciler WHERE id>10";
+    var sorgu3 = "DELETE FROM students WHERE id>10";
     conn.query(sorgu3, function (err, resttable) {
         if (err) throw err;
 
@@ -75,7 +75,7 @@ conn.connect(function (err) {
     });
 
 
-    /*     var sorgu4 = "ALTER TABLE ogrenciler ADD COLUMN IF NOT EXISTS nation VARCHAR(50) AFTER adres;";
+    /*     var sorgu4 = "ALTER TABLE students ADD COLUMN IF NOT EXISTS nation VARCHAR(50) AFTER adres;";
     
         conn.query(sorgu4, function (err) {
             if (err) throw err;
@@ -83,7 +83,7 @@ conn.connect(function (err) {
             console.log("A new Column added");
         });
     
-        var sorguUPD = "UPDATE ogrenciler SET nation='turkish'";
+        var sorguUPD = "UPDATE students SET nation='turkish'";
     
         conn.query(sorguUPD, function (err) {
             if (err) throw err;
