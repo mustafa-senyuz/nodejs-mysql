@@ -110,7 +110,7 @@ conn.connect(function (err) {
     conn.query(sorguUPD, function (err) {
         if (err) throw err;
 
-        console.log("Column updated");
+        console.log("Column updated as well .. ");
     });
 
 
