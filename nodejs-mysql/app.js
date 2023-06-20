@@ -21,7 +21,7 @@ conn.connect(function (err) {
 
     var sorgula = "CREATE TABLE IF NOT EXISTS students (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(30), adres VARCHAR(75))";
 
-    var sorgu = "INSERT INTO students (name , adres) value ?";
+    var sorgu = "INSERT INTO students (name , adres) value ?";     // [values]
 
 
     var values = [
@@ -51,6 +51,8 @@ conn.connect(function (err) {
         console.log("sonuc2 adresi : " + sonuc[2].adres);
     });
 
+    console.log("==================== id>3 ======================");
+
     conn.query("SELECT * FROM students WHERE id>3  OR name LIKE '%fa' ", function (err, result) { //name LIKE '%ho'
         if (err) console.log(err);
 
@@ -75,20 +77,38 @@ conn.connect(function (err) {
     });
 
 
-    /*     var sorgu4 = "ALTER TABLE students ADD COLUMN IF NOT EXISTS nation VARCHAR(50) AFTER adres;";
-    
-        conn.query(sorgu4, function (err) {
-            if (err) throw err;
-    
-            console.log("A new Column added");
-        });
-    
-        var sorguUPD = "UPDATE students SET nation='turkish'";
-    
-        conn.query(sorguUPD, function (err) {
-            if (err) throw err;
-    
-            console.log("Column updated");
-        }); */
+    var checkQuery = "SELECT COUNT(*) as count FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'students' AND COLUMN_NAME = 'nation'";
+
+    conn.query(checkQuery, function (err, results) {
+        if (err) throw err;
+
+        var columnExists = results[0].count;
+
+        if (columnExists === 0) {
+            var addColumnQuery = "ALTER TABLE students ADD COLUMN nation VARCHAR(50) AFTER adres";
+
+            conn.query(addColumnQuery, function (err) {
+                if (err) throw err;
+
+                console.log("A new column added");
+            });
+        } else {
+            console.log("Column already exists");
+        }
+    });
+
+
+
+
+
+    var sorguUPD = "UPDATE students SET nation='turkish'";
+
+    conn.query(sorguUPD, function (err) {
+        if (err) throw err;
+
+        console.log("Column updated");
+    });
+
+
 
 });
