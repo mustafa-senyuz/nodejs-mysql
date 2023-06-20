@@ -30,7 +30,11 @@ conn.connect(function (err) {
         ["fatih", "BERLIN"],
         ["maho", "HAMBURG"],
         ["hasan", "DRESDEN"],
+
         ["huseyin", "ND"]
+
+
+
     ];
 
     conn.query(sorgula);
